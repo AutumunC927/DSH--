@@ -1,0 +1,47 @@
+# ---- 本项目不追踪的东西 ----
+
+# 依赖（插件无需依赖，出现说明是本地误装）
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# 开发期临时产物
+# 注意：tools/ 里的 verify-*.mjs 是回归测试，属于仓库的一部分，【不要】忽略。
+# 它们不随 zip 分发（发布清单 files 里没有 tools），但源码仓库保留。
+_pack_stage/
+*.7z
+
+# 产出的桌宠（绝不该进插件仓库：那是使用者的美术资产 + 生成物）
+桌宠/
+*.pet/
+pet.config.json
+
+# 美术资产（硬性：本仓库【永不】包含任何 Live2D 模型 / 贴图）
+*.moc3
+*.model3.json
+*.exp3.json
+*.motion3.json
+*.physics3.json
+*.pose3.json
+*.cdi3.json
+texture_*.png
+models/
+
+# 运行期产物
+*.log
+*.tmp
+*.partial-*
+_*_cache/
+
+# 【注意】不要忽略 shadercache_*/
+# 它看着像运行期产物，其实是插件【必须自带】的东西：
+# 预编译着色器缓存让桌宠首次启动省掉约 10 秒编译。repo 曾经误把它排除，
+# 导致 runtime/ 少了 490 个文件、装出来的桌宠会明显变慢。
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Live2D 桌宠工坊">
+  <!--
+    自绘图标，不含任何第三方美术资产。
+    意象：一只从屏幕里探出头的小猫 —— 屏幕 = 桌面宠物，猫 = 常见皮套形象。
+  -->
+  <defs>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDFCFA"/>
+      <stop offset="1" stop-color="#F1EEF3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 屏幕 -->
+  <rect x="14" y="26" width="100" height="72" rx="10"
+        fill="url(#screen)" stroke="#D5D3D8" stroke-width="3"/>
+  <!-- 支架 -->
+  <rect x="56" y="98" width="16" height="10" fill="#D5D3D8"/>
+  <rect x="42" y="108" width="44" height="6" rx="3" fill="#C6C4CA"/>
+
+  <!-- 猫耳 -->
+  <path d="M34 56 L42 32 L56 52 Z" fill="#F6DCE2" stroke="#E8A7B8" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M94 56 L86 32 L72 52 Z" fill="#F6DCE2" stroke="#E8A7B8" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- 脸 -->
+  <ellipse cx="64" cy="64" rx="28" ry="24" fill="#F6DCE2" stroke="#E8A7B8" stroke-width="2.5"/>
+  <!-- 眼睛 -->
+  <ellipse cx="54" cy="62" rx="3.4" ry="4.6" fill="#3B3A40"/>
+  <ellipse cx="74" cy="62" rx="3.4" ry="4.6" fill="#3B3A40"/>
+  <!-- 鼻子与嘴 -->
+  <path d="M64 70 l-3 3 h6 z" fill="#E8A7B8"/>
+  <path d="M64 73 v3 M64 76 q-5 4 -9 0 M64 76 q5 4 9 0"
+        fill="none" stroke="#3B3A40" stroke-width="2" stroke-linecap="round"/>
+  <!-- 胡须 -->
+  <path d="M40 66 h-9 M40 72 h-9 M88 66 h9 M88 72 h9"
+        stroke="#E8A7B8" stroke-width="2" stroke-linecap="round"/>
+</svg>

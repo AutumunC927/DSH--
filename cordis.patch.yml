@@ -1,0 +1,12 @@
+# dsh-live2d-pet 的 bundle 层。
+#
+# 一个组件：把 pet_* 工具挂进宿主工具表。
+# 里面没有 shell / 网络 / 客户端注入，所以只有这一行。
+#
+# profile 级补丁仍可用 id 关掉它：
+#   - id: live2d-pet
+#     disabled: true
+
+- insert:
+    - id: live2d-pet
+      name: dsh-live2d-pet
