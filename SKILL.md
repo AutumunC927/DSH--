@@ -404,6 +404,60 @@ XiaoXiaoQiu.Pet.deps.json
 **不要去"优化"这个**。不要改引擎、不要删缓存目录、不要想办法预热 ——
 它是设计的一部分，等一次就好。**这条写在这里就是为了让你不用去研究它。**
 
+### 7.0b 如果这个技能本身打不开（0.4.0 的已知 bug）
+
+**这一段是给「装插件的人」和「改插件的人」看的，桌宠使用者不受影响。**
+
+如果你在技能列表里**看得见** `live2d-desktop-pet`，但一读它（或调用
+`skill(name="live2d-desktop-pet")`）就报：
+
+```
+Error: loaded skill "live2d-desktop-pet" source must be a string
+```
+
+**那是插件 0.4.0 的 bug，不是你的环境有问题。**
+
+- **是什么**：插件向 DSH 注册技能时，漏传了 `source` 字段。DSH 的
+  `ctx.skills.register()` 会给 `invocation` 和 `provider` 兜默认值，
+  **唯独不兜 `source`**；而 DSH 的注册表校验技能定义时**要求 `source` 必须是字符串**。
+  注册那一步不报错（校验不查它），**等技能被读回来才抛** —— 所以现象来得晚。
+- **怎么办**：**升级到 0.4.1**。`link:` 安装的话 `git pull` 之后**重启 DSH**
+  （插件模块在 DSH 启动时装载，改了文件**不重启不生效**）。
+- **如果你是改插件的人**：注册技能时**务必显式写上 `source`**，别指望它有默认值 ——
+  这是目前最容易漏、又最难一眼看出的一个字段：
+
+  ```js
+  return ctx.skills.register({
+    name, description, content,
+    invocation: { modelInvocable: true, userInvocable: true },
+    source: 'runtime'   // ← 漏了这行，技能就会「看得见、打不开」
+  })
+  ```
+
+  > 取值 `'runtime'` 与 DSH 内部常量 `RUNTIME_PROVIDER` 对齐。
+  > 自查命令：`node tools/verify-skill-registration.mjs`（本仓库自带）。
+
+### 7.0c 改这个插件时，别把「随包分发的东西」落下
+
+**这是 0.4.1 修掉的第二个坑，比 `source` 那个更隐蔽。**
+
+本插件有两类内容会**跟着分发出去**：`runtime/`（引擎 + 默认台词池）和
+`SKILL.md`。它们的共同点是：**使用者看不到源码，但会原样拿到里面的字**。
+
+- **默认台词池 `runtime/dialogues.txt` 会被复制进每一个使用者产出的桌宠**
+  （`lib/pet.js` 里那句 `copyFile`）。所以它的注释和台词里**都不许出现任何
+  本项目的内部/私人信息**——早期版本就因为一句注释头和三句台词带了
+  已弃用角色的名字，等于让所有使用者的桌宠都顶着别人的角色名。
+- **自查命令要扫全仓库，不要排除 `runtime/`**：
+
+  ```bash
+  git grep -I "私人词1\|私人词2" -- .        # ✅ 对
+  git grep -I "私人词" -- . ':!runtime'      # ❌ 错：runtime 正是重灾区
+  ```
+
+  0.4.0 时期就是用了下面那种写法，报告「命中 0 文件」，**假干净**了很久。
+  另外注意 `AutumunC927`（仓库自己的克隆地址）是**正常的**，不用清。
+
 ### 7.1 按顺序排查
 
 **按顺序来，不要跳步，不要瞎试。**

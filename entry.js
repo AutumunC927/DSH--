@@ -361,6 +361,13 @@ function registerManual(root) {
         description: manifest.description,
         content: manifest.content,
         invocation: { modelInvocable: true, userInvocable: true },
+        // 必须显式给 `source`：`ctx.skills.register()` 只给 `invocation` 和
+        // `provider` 兜默认值，**不兜 `source`**；而注册表的
+        // `validateDefinition()` 又要求 `source` 必须是字符串。缺了它，
+        // 技能会被注册成功，但 DSH 的 skill 工具读回时抛
+        // `loaded skill "<name>" source must be a string`，技能等于打不开。
+        // 取值与 DSH 内部常量 RUNTIME_PROVIDER = "runtime" 对齐。
+        source: 'runtime',
       })
     } catch {
       return undefined
