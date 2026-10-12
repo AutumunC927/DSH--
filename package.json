@@ -1,6 +1,6 @@
 {
   "name": "dsh-live2d-pet",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "description": "导入 Live2D 素材即可一键产出桌面宠物。自带引擎与使用说明书，插件不含任何美术资产。",
   "license": "MIT",
